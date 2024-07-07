@@ -22,7 +22,9 @@ exports.createCar = async (req, res, next) => {
       carPic,
     });
     res.status(200).json({ car });
+    console.log("car", car);
   } catch (err) {
+    console.log("err", err);
     next(err);
   }
 };
