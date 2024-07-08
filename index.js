@@ -1,43 +1,49 @@
 const express = require("express");
-const app = express();
 const port = 3000;
-const bodyParser = require("body-parser");
+// const Sequelize = require("sequelize");
+const carRoute = require("./routes/carRoute");
 
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
+// const cors = require("cors");
+
+// const sequelize = new Sequelize("postgres", "postgres", "171944", {
+//   host: "localhost",
+//   dialect: "postgres",
+//   port: 5432,
 // });
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  //   password: "yourpassword", // replace with your MySQL root password
-  //   database: "mydatabase",
-});
+const startApp = async () => {
+  const app = express();
+  // app.use(cors());
+  app.use(express.json());
 
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to the database:", err.stack);
-    return;
+  app.use("/cars", carRoute);
+
+  app.use((req, res, next) => {
+    res.status(404).json({ message: "this resource is not found" });
+  });
+
+  //handle error
+  app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).json({ message: err.message });
+  });
+
+  async function connectToDatabase() {
+    try {
+      await sequelize.authenticate();
+      console.log(
+        "Connection to PostgreSQL database has been established successfully."
+      );
+    } catch (error) {
+      console.error("Unable to connect to the database:", error);
+    }
   }
-  console.log("Connected to the database");
-});
 
-app.use(bodyParser.json());
+  connectToDatabase();
 
-// app.get("/users", (req, res) => {
-//   connection.query("SELECT * FROM car", (error, results) => {
-//     if (error) {
-//       return res.status(500).send(error);
-//     }
-//     res.send(results);
-//   });
-// });
+  app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+  });
+};
 
-app.post("/data", (req, res) => {
-  const { name } = req.body;
-  res.send(`Hello, ${name}`);
-});
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost==>:${port}`);
-});
+startApp();

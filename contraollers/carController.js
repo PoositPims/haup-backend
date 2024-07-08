@@ -1,8 +1,10 @@
-const { Car } = require("../models");
+const Car = require("../models/Car");
+
 // get All
 exports.getAllCar = async (req, res, next) => {
   try {
     const car = await Car.findALL;
+    console.log("car", car);
     res.json(car);
   } catch (err) {
     next(err);
@@ -13,6 +15,11 @@ exports.getAllCar = async (req, res, next) => {
 // create
 exports.createCar = async (req, res, next) => {
   try {
+    console.log("req===>", req);
+    const { carBrand, carModel, carRegist, province, status, carPic } =
+      req.body;
+
+    console.log("req.body ====>", req.body);
     const car = await Car.create({
       carBrand,
       carModel,

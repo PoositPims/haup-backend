@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const carController = require("../contraollers/carController");
 
-router.get("allCar", carController.get);
+router.get("/allCar", carController.getAllCar);
 // router.get("/allCar", function (req, res) {
 //   res.send({ type: "GET" });
 // });
