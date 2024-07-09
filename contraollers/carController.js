@@ -27,11 +27,11 @@ exports.getCarById = async (req, res, next) => {
 // create
 exports.createCar = async (req, res, next) => {
   try {
-    console.log("req===>", req);
+    // console.log("req===>", req);
     const { carBrand, carModel, carRegist, province, status, carPic } =
       req.body;
 
-    console.log("req.body ====>", req.body);
+    // console.log("req.body ====>", req.body);
     const car = await Car.create({
       carBrand,
       carModel,
@@ -49,6 +49,32 @@ exports.createCar = async (req, res, next) => {
 };
 
 // update
+exports.updateCar = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { carBrand, carModel, carRegist, province, status, carPic } =
+      req.body;
+    const [rows] = await Car.update(
+      {
+        carBrand,
+        carModel,
+        carRegist,
+        province,
+        status,
+        carPic,
+      },
+      {
+        where: { id },
+      }
+    );
+    if (rows === 0)
+      return res.status(400).json({ message: "cannot update list" });
+    res.status(200).json({ message: "update success" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // delete
 exports.deleteCar = async (req, res, next) => {
   try {
