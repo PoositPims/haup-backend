@@ -5,7 +5,6 @@ exports.getAllCar = async (req, res, next) => {
   try {
     const car = await Car.findAll({});
     res.json({ car });
-    console.log("car", car);
   } catch (err) {
     next(err);
   }
@@ -27,11 +26,9 @@ exports.getCarById = async (req, res, next) => {
 // create
 exports.createCar = async (req, res, next) => {
   try {
-    // console.log("req===>", req);
     const { carBrand, carModel, carRegist, province, status, carPic } =
       req.body;
 
-    // console.log("req.body ====>", req.body);
     const car = await Car.create({
       carBrand,
       carModel,
@@ -41,9 +38,7 @@ exports.createCar = async (req, res, next) => {
       carPic,
     });
     res.status(200).json({ car });
-    console.log("car", car);
   } catch (err) {
-    console.log("err", err);
     next(err);
   }
 };
