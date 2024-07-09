@@ -3,7 +3,7 @@ const port = 3000;
 // const Sequelize = require("sequelize");
 const carRoute = require("./routes/carRoute");
 
-// const cors = require("cors");
+const cors = require("cors");
 
 // const sequelize = new Sequelize("postgres", "postgres", "171944", {
 //   host: "localhost",
@@ -13,7 +13,12 @@ const carRoute = require("./routes/carRoute");
 
 const startApp = async () => {
   const app = express();
-  // app.use(cors());
+  const corsOptions = {
+    origin: "http://localhost:3001",
+    credentials: true,
+  };
+
+  app.use(cors(corsOptions));
   app.use(express.json());
 
   app.use("/cars", carRoute);
