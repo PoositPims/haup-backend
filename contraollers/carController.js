@@ -10,7 +10,19 @@ exports.getAllCar = async (req, res, next) => {
     next(err);
   }
 };
+
 // get by id
+exports.getCarById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const car = await Car.findOne({
+      where: { id: id },
+    });
+    res.json({ car });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // create
 exports.createCar = async (req, res, next) => {
