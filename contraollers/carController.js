@@ -3,9 +3,9 @@ const Car = require("../models/Car");
 // get All
 exports.getAllCar = async (req, res, next) => {
   try {
-    const car = await Car.findALL;
+    const car = await Car.findAll({});
+    res.json({ car });
     console.log("car", car);
-    res.json(car);
   } catch (err) {
     next(err);
   }
