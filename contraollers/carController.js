@@ -26,7 +26,7 @@ exports.getCarById = async (req, res, next) => {
 // create
 exports.createCar = async (req, res, next) => {
   try {
-    const { carBrand, carModel, carRegist, province, status, carPic } =
+    const { carBrand, carModel, carRegist, province, isAvailable, carPic } =
       req.body;
 
     const car = await Car.create({
@@ -34,7 +34,7 @@ exports.createCar = async (req, res, next) => {
       carModel,
       carRegist,
       province,
-      status,
+      isAvailable,
       carPic,
     });
     res.status(200).json({ car });
@@ -47,7 +47,7 @@ exports.createCar = async (req, res, next) => {
 exports.updateCar = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { carBrand, carModel, carRegist, province, status, carPic } =
+    const { carBrand, carModel, carRegist, province, isAvailable, carPic } =
       req.body;
     const [rows] = await Car.update(
       {
@@ -55,7 +55,7 @@ exports.updateCar = async (req, res, next) => {
         carModel,
         carRegist,
         province,
-        status,
+        isAvailable,
         carPic,
       },
       {

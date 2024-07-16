@@ -19,9 +19,9 @@ const Car = sequelize.define("Car", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  isAvailable: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
   },
   carPic: {
     type: DataTypes.STRING,
